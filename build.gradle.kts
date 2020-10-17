@@ -20,7 +20,17 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude(module = "junit")
+	}
+	testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+	testImplementation("com.h2database:h2")
+	testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+	testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.3")
+	testImplementation("io.kotlintest:kotlintest-extensions-spring:3.3.3")
+	testImplementation("io.mockk:mockk:1.9.1")
+	testImplementation("org.junit.jupiter:junit-jupiter-api")
+	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
 tasks.withType<KotlinCompile> {
