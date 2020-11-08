@@ -3,13 +3,13 @@ package personaltaste.entity
 import personaltaste.entity.model.user.UserGender
 import personaltaste.entity.model.user.UserStatus
 import personaltaste.exception.ExceptionCode
-import personaltaste.exception.PTException
+import personaltaste.exception.PersonalTasteException
 import javax.persistence.*
 
 @Entity
 @Table(name = "user")
 data class User(
-        var userName: String,
+        var name: String,
 
         @Column(unique = true)
         val email: String,
@@ -26,14 +26,14 @@ data class User(
 
     companion object {
         fun of(
-                userName: String,
+                name: String,
                 email: String,
                 password: String,
                 age: Int,
                 gender: UserGender
         ): User {
             return User(
-                    userName = userName,
+                    name = name,
                     email = email,
                     password = password,
                     age = age,
@@ -45,7 +45,7 @@ data class User(
 
     fun changePassword(prePassword: String, changePassword: String): User {
         if (password != prePassword)
-            throw PTException(ExceptionCode.INVALID_VALUE)
+            throw PersonalTasteException(ExceptionCode.INVALID_VALUE)
 
         this.password = changePassword
 

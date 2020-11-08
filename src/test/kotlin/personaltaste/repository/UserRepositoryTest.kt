@@ -17,7 +17,7 @@ class UserRepositoryTest {
     fun `create entity`() {
         // given
         val user = User.of(
-                userName = "김세훈",
+                name = "김세훈",
                 email = "sechun0215@gmail.com",
                 password = "1234",
                 age = 20,
@@ -28,7 +28,7 @@ class UserRepositoryTest {
         val result = userRepository.save(user)
 
         // then
-        result.userName shouldBe user.userName
+        result.name shouldBe user.name
     }
 
 }

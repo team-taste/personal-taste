@@ -6,7 +6,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.api.assertThrows
 import personaltaste.entity.model.user.UserGender
 import personaltaste.exception.ExceptionCode
-import personaltaste.exception.PTException
+import personaltaste.exception.PersonalTasteException
 
 class UserTest {
 
@@ -21,7 +21,7 @@ class UserTest {
 
         // when
         val result = User(
-                userName = name,
+                name = name,
                 email = email,
                 password = password,
                 age = age,
@@ -30,7 +30,7 @@ class UserTest {
 
         // then
         assertAll(
-                { result.userName shouldBe name },
+                { result.name shouldBe name },
                 { result.age shouldBe age },
                 { result.password shouldBe password }
         )
@@ -47,7 +47,7 @@ class UserTest {
 
         // when
         val result = User.of(
-                userName = name,
+                name = name,
                 email = email,
                 password = password,
                 age = age,
@@ -56,7 +56,7 @@ class UserTest {
 
         // then
         assertAll(
-                { result.userName shouldBe name },
+                { result.name shouldBe name },
                 { result.age shouldBe age },
                 { result.password shouldBe password }
         )
@@ -73,7 +73,7 @@ class UserTest {
         val password = "1234"
 
         val user = User.of(
-                userName = name,
+                name = name,
                 email = email,
                 password = password,
                 age = age,
@@ -81,7 +81,7 @@ class UserTest {
         )
 
         // when
-        val exception = assertThrows<PTException> {
+        val exception = assertThrows<PersonalTasteException> {
             user.changePassword("1111", "12314")
         }
 
@@ -99,7 +99,7 @@ class UserTest {
         val password = "1234"
 
         val user = User.of(
-                userName = name,
+                name = name,
                 email = email,
                 password = password,
                 age = age,
