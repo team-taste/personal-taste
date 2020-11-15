@@ -16,7 +16,9 @@ data class TasteOption(
         @JoinColumn(name = "taste_id")
         var taste: Taste,
 
-        var name: String
+        var name: String,
+
+        var deleteYn: Boolean = false
 
 ) : BaseEntity() {
 
@@ -30,5 +32,9 @@ data class TasteOption(
                     name = name
             )
         }
+    }
+
+    fun delete() {
+        this.deleteYn = true
     }
 }

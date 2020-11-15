@@ -17,7 +17,9 @@ data class UserTaste(
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "user_id")
-        var user: User
+        var user: User,
+
+        var deleteYn: Boolean = false
 
 ) : BaseEntity() {
     companion object {
@@ -30,5 +32,9 @@ data class UserTaste(
                     user = user
             )
         }
+    }
+
+    fun delete() {
+        this.deleteYn = true
     }
 }
