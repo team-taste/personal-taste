@@ -21,7 +21,11 @@ data class User(
         val gender: UserGender,
 
         @Enumerated(EnumType.STRING)
-        var status: UserStatus = UserStatus.ACTIVE
+        var status: UserStatus = UserStatus.ACTIVE,
+
+        @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+        var userTastes: MutableList<UserTaste> = mutableListOf()
+
 ) : BaseEntity() {
 
     companion object {
@@ -42,7 +46,6 @@ data class User(
         }
     }
 
-
     fun changePassword(prePassword: String, changePassword: String): User {
         if (password != prePassword)
             throw PersonalTasteException(ExceptionCode.INVALID_VALUE)
@@ -50,6 +53,10 @@ data class User(
         this.password = changePassword
 
         return this
+    }
+
+    fun addTaste(userTaste: UserTaste) {
+        this.userTastes.add(userTaste)
     }
 
 }
