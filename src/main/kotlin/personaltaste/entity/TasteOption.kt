@@ -18,7 +18,7 @@ data class TasteOption(
 
         var name: String,
 
-        var deleteYn: Boolean = false
+        var activeYn: Boolean = true
 
 ) : BaseEntity() {
 
@@ -35,6 +35,6 @@ data class TasteOption(
     }
 
     fun delete() {
-        this.deleteYn = true
+        this.activeYn = false
     }
 }

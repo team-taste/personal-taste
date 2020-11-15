@@ -19,7 +19,7 @@ data class UserTaste(
         @JoinColumn(name = "user_id")
         var user: User,
 
-        var deleteYn: Boolean = false
+        var activeYn: Boolean = true
 
 ) : BaseEntity() {
     companion object {
@@ -35,6 +35,6 @@ data class UserTaste(
     }
 
     fun delete() {
-        this.deleteYn = true
+        this.activeYn = false
     }
 }
