@@ -45,8 +45,4 @@ data class Taste(
         this.priority = other.priority
         other.priority = temp
     }
-
-    fun addOption(option: TasteOption) {
-        this.tasteOptions.add(option)
-    }
 }

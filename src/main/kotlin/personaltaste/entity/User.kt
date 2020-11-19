@@ -55,8 +55,4 @@ data class User(
         return this
     }
 
-    fun addTaste(userTaste: UserTaste) {
-        this.userTastes.add(userTaste)
-    }
-
 }
