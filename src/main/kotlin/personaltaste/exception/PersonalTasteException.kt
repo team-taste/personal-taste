@@ -9,6 +9,4 @@ class PersonalTasteException(
         exceptionCode.message.plus(
                 additionalMessage?.let { " ".plus(it.trim()) } ?: ""
         )
-) {
-
-}
+)
