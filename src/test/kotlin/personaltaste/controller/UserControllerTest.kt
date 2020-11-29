@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import personaltaste.controller.model.user.UserCreateRequest
+import personaltaste.entity.User
 import personaltaste.entity.model.user.UserGender
 import personaltaste.exception.ExceptionCode
 import personaltaste.exception.PersonalTasteException
@@ -95,6 +96,32 @@ class UserControllerTest : BaseTest() {
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.error_code", equalTo("INVALID_VALUE")))
             .andExpect(jsonPath("$.error_message", equalTo("${ExceptionCode.INVALID_VALUE.message} 중복된 email 존") ))
+    }
+
+    @Test
+    fun `user 삭제 성공`() {
+        // given
+        val userId = 1L
+
+        val user = User.of(
+            email = "sechun0215@gmail.com",
+            name = "김세훈",
+            password = "1234",
+            age = 20,
+            gender = UserGender.MALE
+        )
+
+        given(userCommonService.delete(userId)).willReturn(user.delete())
+
+        // when
+        val result = mockMvc.perform(
+            MockMvcRequestBuilders.delete("/api/v1/users/{user_id}", 1)
+        )
+
+        // then
+        result
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().isOk)
     }
 
 }
