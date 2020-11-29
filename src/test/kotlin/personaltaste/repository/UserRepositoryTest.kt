@@ -17,11 +17,11 @@ class UserRepositoryTest {
     fun `create entity`() {
         // given
         val user = User.of(
-                name = "김세훈",
-                email = "sechun0215@gmail.com",
-                password = "1234",
-                age = 20,
-                gender = UserGender.MALE
+            name = "김세훈",
+            email = "sechun0215@gmail.com",
+            password = "1234",
+            age = 20,
+            gender = UserGender.MALE
         )
 
         // when
@@ -31,4 +31,25 @@ class UserRepositoryTest {
         result.name shouldBe user.name
     }
 
+    @Test
+    fun `user exist test`() {
+        // given
+        val email = "sechun0215@gmail.com"
+
+        userRepository.save(
+            User.of(
+                name = "김세훈",
+                email = email,
+                password = "1234",
+                age = 20,
+                gender = UserGender.MALE
+            )
+        )
+
+        // when
+        val result = userRepository.existsByEmail(email)
+
+        // then
+        result shouldBe true
+    }
 }

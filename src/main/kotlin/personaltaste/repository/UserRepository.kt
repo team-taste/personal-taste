@@ -6,4 +6,6 @@ import personaltaste.entity.User
 
 interface UserRepository : JpaRepository<User, Long> {
 
+    fun existsByEmail(email: String): Boolean
+
 }
