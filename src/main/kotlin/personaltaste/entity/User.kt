@@ -55,4 +55,10 @@ data class User(
         return this
     }
 
+    fun delete(): User {
+        this.status = UserStatus.DELETE
+
+        return this
+    }
+
 }

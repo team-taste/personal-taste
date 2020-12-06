@@ -7,10 +7,14 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.data.repository.findByIdOrNull
+import personaltaste.entity.User
 import personaltaste.entity.model.user.UserGender
+import personaltaste.entity.model.user.UserStatus
 import personaltaste.repository.UserRepository
 import personaltaste.service.model.user.UserCreate
 import support.test.BaseTest
+import java.util.*
 
 @SpringBootTest(classes = [UserCommonService::class])
 class UserCommonServiceTest: BaseTest() {
@@ -42,6 +46,28 @@ class UserCommonServiceTest: BaseTest() {
 
         // then
         result shouldBe user
+    }
+
+    @Test
+    fun `delete test`() {
+        // given
+        val userId = 1L
+
+        val user = User.of(
+            email = "sechun0215@gmail.com",
+            name = "김세훈",
+            password = "1234",
+            age = 20,
+            gender = UserGender.MALE
+        )
+
+        given(userRepository.findById(userId)).willReturn(Optional.of(user))
+
+        // when
+        val result = userCommonService.delete(userId)
+
+        // then
+        result.status shouldBe UserStatus.DELETE
     }
 
 }

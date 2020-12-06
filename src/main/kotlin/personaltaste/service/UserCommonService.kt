@@ -1,5 +1,6 @@
 package personaltaste.service
 
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import personaltaste.entity.User
@@ -24,6 +25,12 @@ class UserCommonService(
 
     fun checkExists(email: String): Boolean {
         return userRepository.existsByEmail(email)
+    }
+
+    @Transactional
+    fun delete(userId: Long): User {
+        return userRepository.findByIdOrNull(userId)?.delete()
+            ?: throw PersonalTasteException(ExceptionCode.NOT_FOUND, "${userId}에 맞는 User가 존재하지 않습니다.")
     }
 
 }
