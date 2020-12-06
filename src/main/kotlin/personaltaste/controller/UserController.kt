@@ -27,8 +27,7 @@ class UserController(
     }
 
 
-    @DeleteMapping
-    @RequestMapping("/{user_id}")
+    @DeleteMapping("/{user_id}")
     @ResponseStatus(HttpStatus.OK)
     fun delete(
         @PathVariable("user_id") userId: Long
