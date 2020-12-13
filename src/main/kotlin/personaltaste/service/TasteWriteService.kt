@@ -15,7 +15,7 @@ import personaltaste.service.model.taste.TasteCreate
  * @author seungmin
  */
 @Service
-class TasteManageService(
+class TasteWriteService(
         private val tasteRepository: TasteRepository
 ) {
 

@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import personaltaste.entity.Taste
-import personaltaste.entity.User
 import personaltaste.entity.model.taste.TasteStatus
-import personaltaste.entity.model.user.UserGender
-import personaltaste.entity.model.user.UserStatus
 import personaltaste.repository.TasteRepository
 import personaltaste.service.model.taste.TasteCreate
 import support.test.BaseTest
@@ -19,14 +16,14 @@ import java.util.*
 /**
  * @author seungmin
  */
-@SpringBootTest(classes = [TasteManageService::class])
+@SpringBootTest(classes = [TasteWriteService::class])
 class TasteManageServiceTest: BaseTest() {
 
     @MockBean
     private lateinit var tasteRepository: TasteRepository
 
     @Autowired
-    private lateinit var tasteManageService: TasteManageService
+    private lateinit var tasteWriteService: TasteWriteService
 
     @Test
     fun `create test`() {
@@ -44,7 +41,7 @@ class TasteManageServiceTest: BaseTest() {
         given(tasteRepository.save(taste)).willReturn(taste)
 
         // when
-        val result = tasteManageService.create(tasteCreate)
+        val result = tasteWriteService.create(tasteCreate)
 
         // then
         result shouldBe taste
@@ -65,7 +62,7 @@ class TasteManageServiceTest: BaseTest() {
         given(tasteRepository.findById(eatId)).willReturn(Optional.of(eat))
 
         // when
-        val result = tasteManageService.delete(eatId)
+        val result = tasteWriteService.delete(eatId)
 
         // then
         result.status shouldBe TasteStatus.DELETE

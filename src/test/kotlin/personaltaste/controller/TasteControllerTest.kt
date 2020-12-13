@@ -19,7 +19,7 @@ import personaltaste.entity.Taste
 import personaltaste.exception.ExceptionCode
 import personaltaste.exception.PersonalTasteException
 import personaltaste.service.TasteFindService
-import personaltaste.service.TasteManageService
+import personaltaste.service.TasteWriteService
 import personaltaste.service.model.taste.TasteCreate
 import personaltaste.service.model.taste.TasteFind
 import support.test.BaseTest
@@ -35,7 +35,7 @@ class TasteControllerTest : BaseTest() {
     private lateinit var tasteFindService: TasteFindService
 
     @MockBean
-    private lateinit var tasteManageService: TasteManageService
+    private lateinit var tasteWriteService: TasteWriteService
 
     @Autowired
     private lateinit var mockMvc: MockMvc
@@ -87,7 +87,7 @@ class TasteControllerTest : BaseTest() {
                 priority = priority
         )
 
-        given(tasteManageService.create(tasteCreate)).willReturn(tasteCreate.toTaste())
+        given(tasteWriteService.create(tasteCreate)).willReturn(tasteCreate.toTaste())
 
         // when
         val result = mockMvc.perform(
@@ -116,7 +116,7 @@ class TasteControllerTest : BaseTest() {
                 priority = priority
         )
 
-        given(tasteManageService.create(tasteCreate)).willThrow(PersonalTasteException(ExceptionCode.INVALID_VALUE, "중복된 name 존재"))
+        given(tasteWriteService.create(tasteCreate)).willThrow(PersonalTasteException(ExceptionCode.INVALID_VALUE, "중복된 name 존재"))
 
         // when
         val result = mockMvc.perform(
@@ -149,7 +149,7 @@ class TasteControllerTest : BaseTest() {
                 priority = eatPriority
         )
 
-        given(tasteManageService.delete(eatId)).willReturn(eat.delete())
+        given(tasteWriteService.delete(eatId)).willReturn(eat.delete())
 
         // when
         val result = mockMvc.perform(
@@ -166,7 +166,7 @@ class TasteControllerTest : BaseTest() {
     fun `taste 삭제 실패`() {
         // given
         val eatId = 1L
-        given(tasteManageService.delete(eatId)).willThrow(PersonalTasteException(ExceptionCode.NOT_FOUND, "일치하는 Taste 가 존재하지 않습니다."))
+        given(tasteWriteService.delete(eatId)).willThrow(PersonalTasteException(ExceptionCode.NOT_FOUND, "일치하는 Taste 가 존재하지 않습니다."))
 
         // when
         val result = mockMvc.perform(

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*
 import personaltaste.controller.model.taste.TasteCreateRequest
 import personaltaste.controller.model.taste.TasteFindMultiResponse
 import personaltaste.service.TasteFindService
-import personaltaste.service.TasteManageService
+import personaltaste.service.TasteWriteService
 
 /**
  * 취향 (Taste) 목록조회, 추가, 삭제
@@ -16,7 +16,7 @@ import personaltaste.service.TasteManageService
 @RequestMapping("/api/v1/tastes")
 class TasteController(
         private val tasteFindService: TasteFindService,
-        private val tasteManageService: TasteManageService
+        private val tasteWriteService: TasteWriteService
 ) {
 
     @GetMapping
@@ -31,7 +31,7 @@ class TasteController(
     fun create(
             @RequestBody tasteCreateRequest: TasteCreateRequest
     ) {
-        tasteManageService.create(tasteCreateRequest.taste)
+        tasteWriteService.create(tasteCreateRequest.taste)
     }
 
     @DeleteMapping("/{taste_id}")
@@ -39,7 +39,7 @@ class TasteController(
     fun delete(
             @PathVariable("taste_id") tasteId: Long
     ) {
-        tasteManageService.delete(tasteId)
+        tasteWriteService.delete(tasteId)
     }
 
 }
