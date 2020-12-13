@@ -95,7 +95,7 @@ class UserControllerTest : BaseTest() {
             .andDo(MockMvcResultHandlers.print())
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.error_code", equalTo("INVALID_VALUE")))
-            .andExpect(jsonPath("$.error_message", equalTo("${ExceptionCode.INVALID_VALUE.message} 중복된 email 존") ))
+            .andExpect(jsonPath("$.error_message", equalTo("${ExceptionCode.INVALID_VALUE.message} 중복된 email 존재") ))
     }
 
     @Test

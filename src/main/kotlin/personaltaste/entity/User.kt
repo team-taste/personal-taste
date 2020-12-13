@@ -18,6 +18,7 @@ data class User(
 
         val age: Int,
 
+        @Enumerated(EnumType.STRING)
         val gender: UserGender,
 
         @Enumerated(EnumType.STRING)
