@@ -10,7 +10,7 @@ import personaltaste.exception.PersonalTasteException
 import personaltaste.service.model.taste.TasteCreate
 
 /**
- *
+ * 취향(taste) Entity 생성/삭제 서비스
  *
  * @author seungmin
  */
@@ -21,7 +21,7 @@ class TasteWriteService(
 
     @Transactional
     fun create(tasteCreate: TasteCreate): Taste {
-        if (checkExists(tasteCreate.name))
+        if (this.checkExists(tasteCreate.name))
             throw PersonalTasteException(ExceptionCode.INVALID_VALUE, "동일한 취향이 이미 생성되어 있습니다.")
 
         return tasteRepository.save(tasteCreate.toTaste())
