@@ -2,6 +2,7 @@ package personaltaste.service
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import personaltaste.entity.Taste
 import personaltaste.entity.model.taste.TasteStatus
 import personaltaste.exception.ExceptionCode
 import personaltaste.exception.PersonalTasteException
@@ -27,9 +28,11 @@ class TasteFindService(
     }
 
     fun findOneActive(tasteId : Long) : TasteFind {
-        val taste = tasteRepository.findByIdAndStatus(tasteId, TasteStatus.ACTIVE)
-                ?: throw PersonalTasteException(ExceptionCode.NOT_FOUND, "${tasteId}에 맞는 취향이 존재하지 않습니다.")
+        return TasteFind.ofOnlyActiveOption(this.findOneActiveTaste(tasteId))
+    }
 
-        return TasteFind.ofOnlyActiveOption(taste)
+    fun findOneActiveTaste(tasteId : Long) : Taste {
+        return tasteRepository.findByIdAndStatus(tasteId, TasteStatus.ACTIVE)
+                ?: throw PersonalTasteException(ExceptionCode.NOT_FOUND, "${tasteId}에 맞는 취향이 존재하지 않습니다.")
     }
 }
