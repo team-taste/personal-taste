@@ -34,7 +34,15 @@ data class UserTaste(
         }
     }
 
-    fun delete() {
+    fun active(): UserTaste {
+        this.activeYn = true
+
+        return this
+    }
+
+    fun delete(): UserTaste {
         this.activeYn = false
+
+        return this
     }
 }

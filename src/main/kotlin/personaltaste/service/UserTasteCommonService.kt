@@ -1,25 +1,42 @@
 package personaltaste.service
 
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import personaltaste.entity.User
 import personaltaste.entity.UserTaste
-import personaltaste.exception.ExceptionCode
-import personaltaste.exception.PersonalTasteException
-import personaltaste.repository.UserRepository
+import personaltaste.repository.TasteOptionRepository
 import personaltaste.repository.UserTasteRepository
 
 @Service
 class UserTasteCommonService(
-    private val userRepository: UserRepository,
-    private val userTasteRepository: UserTasteRepository
+    private val userTasteRepository: UserTasteRepository,
+    private val tasteOptionRepository: TasteOptionRepository
 ) {
 
-    fun list(userId: Long): List<UserTaste> {
-        val user = userRepository.findByIdOrNull(userId)
-            ?: throw PersonalTasteException(ExceptionCode.NOT_FOUND, "user를 찾지못하였습니다.")
-
-        return userTasteRepository.findByUser(user)
+    fun list(user: User): List<UserTaste> {
+        return userTasteRepository.findByUserAndActiveYn(user)
     }
 
+    @Transactional
+    fun bulkCreate(user: User, ids: List<Long>): List<UserTaste> {
+        val exist = userTasteRepository.findAllByUserAndTasteOptionId(user, ids).map {
+            it.active()
+        }
+
+        val nonExist = tasteOptionRepository.findAllById(ids.subtract(exist.map { it.tasteOption.id })).map {
+            UserTaste.of(it, user)
+        }
+
+        return userTasteRepository.saveAll(
+            exist.plus(nonExist)
+        )
+    }
+
+    @Transactional
+    fun bulkDelete(user: User, ids: List<Long>): List<UserTaste> {
+        return userTasteRepository.findAllByUserAndTasteOptionId(user, ids).map {
+            it.delete()
+        }
+    }
 
 }
