@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPat
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import personaltaste.controller.model.taste.TasteCreateRequest
 import personaltaste.entity.Taste
+import personaltaste.entity.TasteOption
 import personaltaste.exception.ExceptionCode
 import personaltaste.exception.PersonalTasteException
 import personaltaste.service.TasteFindService
@@ -171,6 +172,64 @@ class TasteControllerTest : BaseTest() {
         // when
         val result = mockMvc.perform(
                 MockMvcRequestBuilders.delete("/api/v1/tastes/{taste_id}", eatId)
+        )
+
+        // then
+        result
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isNotFound)
+                .andExpect(jsonPath("$.error_code", equalTo("NOT_FOUND")))
+                .andExpect(jsonPath("$.error_message", equalTo("${ExceptionCode.NOT_FOUND.message} 일치하는 Taste 가 존재하지 않습니다.") ))
+    }
+
+    @Test
+    fun `taste 단 건 조회 성공`() {
+        // given
+        val tasteName = "먹기"
+        val tastePriority = 1
+        val tasteId = 1L
+
+        val tasteOptionPourName = "부먹"
+        val tasteOptionDipName = "찍먹"
+
+        val taste = Taste.of(
+                name = tasteName,
+                priority = tastePriority
+        )
+
+        val tasteOptionPour = TasteOption(taste, tasteOptionPourName)
+        val tasteOptionDip = TasteOption(taste, tasteOptionDipName)
+
+        taste.id = tasteId
+        taste.tasteOptions = mutableListOf(tasteOptionPour, tasteOptionDip)
+
+        given(tasteFindService.findOneActive(tasteId)).willReturn(TasteFind.ofOnlyActiveOption(taste))
+
+        // when
+        val result = mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/v1/tastes/{taste_id}", tasteId)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        )
+
+        // then
+        result
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk)
+                .andExpect(jsonPath("taste.id").value(tasteId))
+                .andExpect(jsonPath("taste.name").value(tasteName))
+                .andExpect(jsonPath("taste.taste_options[0].name").value(tasteOptionPourName))
+                .andExpect(jsonPath("taste.taste_options[1].name").value(tasteOptionDipName))
+    }
+
+    @Test
+    fun `taste 단 건 조회 실패`() {
+        // given
+        val tasteId = 10L
+        given(tasteFindService.findOneActive(tasteId)).willThrow(PersonalTasteException(ExceptionCode.NOT_FOUND, "일치하는 Taste 가 존재하지 않습니다."))
+        // when
+        val result = mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/v1/tastes/{taste_id}", tasteId)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
         )
 
         // then

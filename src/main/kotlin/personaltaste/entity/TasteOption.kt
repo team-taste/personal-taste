@@ -34,7 +34,9 @@ data class TasteOption(
         }
     }
 
-    fun delete() {
+    fun delete() : TasteOption {
         this.activeYn = false
+
+        return this
     }
 }

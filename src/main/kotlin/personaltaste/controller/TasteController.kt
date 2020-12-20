@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import personaltaste.controller.model.taste.TasteCreateRequest
 import personaltaste.controller.model.taste.TasteFindMultiResponse
+import personaltaste.controller.model.taste.TasteFindSingleResponse
 import personaltaste.service.TasteFindService
 import personaltaste.service.TasteWriteService
 
@@ -24,6 +25,12 @@ class TasteController(
     fun findAll() : TasteFindMultiResponse {
         // todo paging
         return TasteFindMultiResponse.of(tasteFindService.findAllActive())
+    }
+
+    @GetMapping("/{taste_id}")
+    @ResponseStatus(HttpStatus.OK)
+    fun findOne(@PathVariable("taste_id") tasteId: Long) : TasteFindSingleResponse {
+        return TasteFindSingleResponse.of(tasteFindService.findOneActive(tasteId))
     }
 
     @PostMapping

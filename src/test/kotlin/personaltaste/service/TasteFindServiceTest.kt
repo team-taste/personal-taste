@@ -25,7 +25,7 @@ class TasteFindServiceTest: BaseTest() {
     private lateinit var tasteFindService: TasteFindService
 
     @Test
-    fun `findAll test`() {
+    fun `findAllActive test`() {
         // given
         val eatName = "먹기"
         val eatPriority = 1
@@ -58,4 +58,26 @@ class TasteFindServiceTest: BaseTest() {
         // then
         result shouldBe tasteFindList
     }
+
+    @Test
+    fun `findOneActive test`() {
+        // given
+        val tasteName = "먹기"
+        val tastePriority = 1
+        val tasteId = 1L
+
+        val taste = Taste.of(
+                name = tasteName,
+                priority = tastePriority
+        )
+
+        given(tasteRepository.findByIdAndStatus(tasteId, TasteStatus.ACTIVE)).willReturn(taste)
+
+        // when
+        val result = tasteFindService.findOneActive(tasteId)
+
+        // then
+        result shouldBe TasteFind.ofOnlyActiveOption(taste)
+    }
+
 }

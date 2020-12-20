@@ -17,7 +17,7 @@ import java.util.*
  * @author seungmin
  */
 @SpringBootTest(classes = [TasteWriteService::class])
-class TasteManageServiceTest: BaseTest() {
+class TasteWriteServiceTest: BaseTest() {
 
     @MockBean
     private lateinit var tasteRepository: TasteRepository

@@ -22,7 +22,6 @@ class UserCommonService(
         return userRepository.save(userCreate.toUser())
     }
 
-
     fun checkExists(email: String): Boolean {
         return userRepository.existsByEmail(email)
     }

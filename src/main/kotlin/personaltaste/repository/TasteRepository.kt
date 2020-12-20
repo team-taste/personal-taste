@@ -13,5 +13,7 @@ interface TasteRepository : JpaRepository<Taste, Long> {
 
     fun findAllByStatusOrderByPriority(status: TasteStatus): List<Taste>
 
+    fun findByIdAndStatus(id : Long, status : TasteStatus) : Taste?
+
     fun existsByName(name: String) : Boolean
 }
