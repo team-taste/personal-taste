@@ -1,11 +1,7 @@
 package personaltaste.controller
 
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import personaltaste.controller.model.user.UserCreateRequest
 import personaltaste.service.UserCommonService
 
@@ -28,6 +24,15 @@ class UserController(
         @RequestBody userCreateRequest: UserCreateRequest
     ) {
         userCommonService.create(userCreateRequest.user)
+    }
+
+
+    @DeleteMapping("/{user_id}")
+    @ResponseStatus(HttpStatus.OK)
+    fun delete(
+        @PathVariable("user_id") userId: Long
+    ) {
+        userCommonService.delete(userId)
     }
 
 }

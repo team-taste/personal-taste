@@ -18,6 +18,7 @@ data class User(
 
         val age: Int,
 
+        @Enumerated(EnumType.STRING)
         val gender: UserGender,
 
         @Enumerated(EnumType.STRING)
@@ -51,6 +52,12 @@ data class User(
             throw PersonalTasteException(ExceptionCode.INVALID_VALUE)
 
         this.password = changePassword
+
+        return this
+    }
+
+    fun delete(): User {
+        this.status = UserStatus.DELETE
 
         return this
     }

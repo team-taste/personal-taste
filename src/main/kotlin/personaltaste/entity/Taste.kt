@@ -45,4 +45,10 @@ data class Taste(
         this.priority = other.priority
         other.priority = temp
     }
+
+    fun delete(): Taste {
+        this.status = TasteStatus.DELETE
+
+        return this
+    }
 }
