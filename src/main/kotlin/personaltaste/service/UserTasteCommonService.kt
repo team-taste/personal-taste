@@ -23,13 +23,12 @@ class UserTasteCommonService(
             it.active()
         }
 
-        val nonExist = tasteOptionRepository.findAllById(ids.subtract(exist.map { it.tasteOption.id })).map {
-            UserTaste.of(it, user)
-        }
+        val nonExist = tasteOptionRepository.findAllById(ids.subtract(exist.map { it.tasteOption.id }))
+            .map { UserTaste.of(it, user) }
 
-        return userTasteRepository.saveAll(
-            exist.plus(nonExist)
-        )
+        return exist.plus(nonExist).takeIf { it.isNotEmpty() }?.let {
+            userTasteRepository.saveAll(it)
+        } ?: emptyList()
     }
 
     @Transactional

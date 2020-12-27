@@ -3,12 +3,7 @@ package personaltaste.controller.model.user_taste
 import com.fasterxml.jackson.annotation.JsonIgnore
 
 data class UserTasteRequest(
-    val tasteOptionIds: List<String>
+    val tasteOptionIds: List<Long>
 ) {
-
-    @JsonIgnore
-    fun getIds(): List<Long> = tasteOptionIds.map {
-        it.toLong()
-    }
 
 }

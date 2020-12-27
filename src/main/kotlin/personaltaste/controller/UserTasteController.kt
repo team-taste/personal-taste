@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import personaltaste.annotation.PTUserParam
+import personaltaste.annotation.UserParam
 import personaltaste.controller.model.user_taste.UserTasteRequest
+import personaltaste.controller.model.user_taste.UserTasteResponse
 import personaltaste.entity.User
 import personaltaste.service.UserTasteCommonService
 import personaltaste.service.model.user_taste.UserTasteListResponse
@@ -27,27 +28,29 @@ class UserTasteController(
      */
     @GetMapping
     fun list(
-        @PTUserParam user: User
+        @UserParam user: User
     ): UserTasteListResponse {
         return UserTasteListResponse.ofUserTastes(userTasteService.list(user))
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     fun create(
-        @PTUserParam user: User,
+        @UserParam user: User,
         @RequestBody userTasteRequest: UserTasteRequest
-    ) {
-        userTasteService.bulkCreate(user, userTasteRequest.getIds())
+    ): UserTasteResponse {
+        return UserTasteResponse.ofUserTastes(
+            userTasteService.bulkCreate(user, userTasteRequest.tasteOptionIds)
+        )
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping
     fun delete(
-        @PTUserParam user: User,
+        @UserParam user: User,
         @RequestBody userTasteRequest: UserTasteRequest
-    ) {
-        userTasteService.bulkDelete(user, userTasteRequest.getIds())
+    ): UserTasteResponse {
+        return UserTasteResponse.ofUserTastes(
+            userTasteService.bulkDelete(user, userTasteRequest.tasteOptionIds)
+        )
     }
 
 }

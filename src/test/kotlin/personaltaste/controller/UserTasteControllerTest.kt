@@ -4,11 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.given
 import mu.KotlinLogging
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.hasSize
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -17,14 +14,13 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import personaltaste.entity.Taste
 import personaltaste.entity.TasteOption
 import personaltaste.entity.User
 import personaltaste.entity.UserTaste
-import personaltaste.resolver.PTUserExtractResolver
+import personaltaste.resolver.UserExtractResolver
 import personaltaste.service.UserTasteCommonService
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -43,7 +39,7 @@ class UserTasteControllerTest {
     private lateinit var userTasteCommonService: UserTasteCommonService
 
     @MockBean
-    private lateinit var ptUserExtractResolver: PTUserExtractResolver
+    private lateinit var userExtractResolver: UserExtractResolver
 
     @Test
     fun `userTaste 목록 조회 성공`() {
@@ -59,8 +55,8 @@ class UserTasteControllerTest {
             UserTaste.of(tTasteOption, user)
         )
 
-        given(ptUserExtractResolver.supportsParameter(any())).willCallRealMethod()
-        given(ptUserExtractResolver.resolveArgument(any(), any(), any(), any())).willReturn(user)
+        given(userExtractResolver.supportsParameter(any())).willCallRealMethod()
+        given(userExtractResolver.resolveArgument(any(), any(), any(), any())).willReturn(user)
 
         given(userTasteCommonService.list(user)).willReturn(userTastes)
 

@@ -2,5 +2,5 @@ package personaltaste.annotation
 
 @Target(AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class PTUserParam {
+annotation class UserParam {
 }

@@ -7,19 +7,19 @@ import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
-import personaltaste.annotation.PTUserParam
+import personaltaste.annotation.UserParam
 import personaltaste.entity.User
 import personaltaste.exception.ExceptionCode
 import personaltaste.exception.PersonalTasteException
 import personaltaste.repository.UserRepository
 
 @Component
-class PTUserExtractResolver(
+class UserExtractResolver(
     private val userRepository: UserRepository
 ) : HandlerMethodArgumentResolver {
 
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasParameterAnnotation(PTUserParam::class.java)
+        return parameter.hasParameterAnnotation(UserParam::class.java)
     }
 
     // TODO : security 사용시 시큐리티 토큰으로 user 검증하는 로직으로 바꿔야함
