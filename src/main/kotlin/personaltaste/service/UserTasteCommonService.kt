@@ -1,6 +1,7 @@
 package personaltaste.service
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Propagation
 import org.springframework.transaction.annotation.Transactional
 import personaltaste.entity.User
 import personaltaste.entity.UserTaste
@@ -13,6 +14,7 @@ class UserTasteCommonService(
     private val tasteOptionRepository: TasteOptionRepository
 ) {
 
+    @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
     fun list(user: User): List<UserTaste> {
         return userTasteRepository.findByUserAndActiveYn(user)
     }
