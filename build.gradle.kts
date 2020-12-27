@@ -1,5 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val kotlinVersion = "1.3.31"
+
 plugins {
 	id("org.springframework.boot") version "2.1.17.RELEASE"
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
@@ -26,6 +28,7 @@ dependencies {
 	implementation("io.github.microutils:kotlin-logging:1.7.6")
 	runtime("com.h2database:h2")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(module = "junit")
 	}

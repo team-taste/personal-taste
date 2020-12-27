@@ -96,6 +96,7 @@ class UserControllerTest : BaseTest() {
             .andExpect(status().isBadRequest)
             .andExpect(jsonPath("$.error_code", equalTo("INVALID_VALUE")))
             .andExpect(jsonPath("$.error_message", equalTo("${ExceptionCode.INVALID_VALUE.message} 중복된 email 존재") ))
+            .andExpect(jsonPath("$.error_message", equalTo("${ExceptionCode.INVALID_VALUE.message} 중복된 email 존재") ))
     }
 
     @Test

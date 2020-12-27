@@ -9,10 +9,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 
-/**
- * Created by dom.alpha on 2020/11/27.
- */
-
 @Configuration
 class ObjectMapperConfig {
 

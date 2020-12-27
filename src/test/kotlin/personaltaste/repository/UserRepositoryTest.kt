@@ -52,4 +52,5 @@ class UserRepositoryTest {
         // then
         result shouldBe true
     }
+
 }
