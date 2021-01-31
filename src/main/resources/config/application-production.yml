@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: production
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver-class-name:
+    url:
+    username:
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: true
