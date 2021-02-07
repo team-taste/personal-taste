@@ -24,4 +24,4 @@ server:
   port: 8090
 
 logging:
-  config:
+  level: DEBUG
