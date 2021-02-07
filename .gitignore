@@ -16,7 +16,6 @@ build/
 
 ### IntelliJ IDEA ###
 .idea
-.kotlintest
 *.iws
 *.iml
 *.ipr
@@ -34,8 +33,3 @@ out/
 ### VS Code ###
 .vscode/
 *.DS_STORE
-
-### Front ###
-/src/frontend/npm-*
-/src/main/resources/static
-/src/frontend/node_modules

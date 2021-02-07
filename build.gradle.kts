@@ -1,4 +1,3 @@
-import com.moowork.gradle.node.npm.NpmTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val kotlinVersion = "1.3.31"
@@ -7,7 +6,6 @@ plugins {
 	id("org.springframework.boot") version "2.1.17.RELEASE"
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
 	id("org.jetbrains.kotlin.plugin.noarg") version "1.2.71"
-	id("com.moowork.node") version "1.3.1"
 	kotlin("jvm") version "1.2.71"
 	kotlin("plugin.spring") version "1.2.71"
 }
@@ -49,32 +47,4 @@ tasks.withType<KotlinCompile> {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "1.8"
 	}
-}
-
-node {
-	npmVersion = "6.13.4"
-	workDir = file("./src/frontend")
-	npmWorkDir = file("./src/frontend")
-	nodeModulesDir = file("./src/frontend")
-}
-
-val setUp by tasks.creating(NpmTask::class) {
-	description = "INSTALL NODE.JS PACKAGES"
-	setArgs(mutableListOf("install"))
-	inputs.files(
-			listOf(
-					file("package.json"),
-					file("node_module")
-			)
-	)
-}
-
-val buildFrontEnd by tasks.creating(NpmTask::class) {
-	description = "BUILD vue.js"
-	setArgs(mutableListOf("run", "build"))
-	dependsOn(setUp)
-}
-
-val processResources by tasks.getting(ProcessResources::class) {
-	dependsOn(buildFrontEnd)
 }
