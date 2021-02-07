@@ -15,93 +15,28 @@
         </encoder>
     </appender>
 
-    <!--&lt;!&ndash;파일에 로그를 남깁니다.&ndash;&gt;-->
-    <!--<appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-        <!--<file>${LOG_DIR}/bamdule.log</file>-->
-        <!--<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
-            <!--<Pattern>-->
-                <!--%d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n-->
-            <!--</Pattern>-->
-            <!--<charset>UTF-8</charset>-->
-        <!--</encoder>-->
+    <!--파일에 로그를 남깁니다.-->
 
-        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-            <!--<fileNamePattern>${LOG_DIR}/bamdule/bamdule.%d{yyyy-MM-dd}.log</fileNamePattern>-->
-            <!--<maxHistory>30</maxHistory>-->
-        <!--</rollingPolicy>-->
-    <!--</appender>-->
 
-    <!--&lt;!&ndash;파일에 로그를 남깁니다. (Roling)&ndash;&gt;-->
-    <!--<appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-        <!--<file>${LOG_DIR}/archived/bamdule_roling.log</file>-->
-        <!--<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
-            <!--<Pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n</Pattern>-->
-            <!--<charset>UTF-8</charset>-->
-        <!--</encoder>-->
+    <!--파일에 로그를 남깁니다. (Roling)-->
 
-        <!--&lt;!&ndash; 10MB가 넘어가면 새로운 압축파일이 생성 &ndash;&gt;-->
-        <!--<triggeringPolicy-->
-                <!--class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
-            <!--<MaxFileSize>10MB</MaxFileSize>-->
-        <!--</triggeringPolicy>-->
+    <!--에러 일 경우 파일에 로그를 남깁니다-->
 
-        <!--&lt;!&ndash; 파일을 덮어쓰는 정책 &ndash;&gt;-->
-        <!--<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
-            <!--<FileNamePattern>${LOG_DIR}/archived/bamdule_roling.%i.log.zip</FileNamePattern>-->
-            <!--&lt;!&ndash;-->
-                <!--10MB단위로 로그 압축 파일이 생성된다. (1 ~ 10)-->
-                <!--10개가 넘어가면 오래된순으로 덮어쓰기 됩니다.-->
-            <!--&ndash;&gt;-->
-            <!--<MinIndex>1</MinIndex>-->
-            <!--<MaxIndex>10</MaxIndex>-->
-        <!--</rollingPolicy>-->
-    <!--</appender>-->
 
-    <!--&lt;!&ndash;에러 일 경우 파일에 로그를 남깁니다&ndash;&gt;-->
-    <!--<appender name="Error" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
-            <!--<level>error</level>-->
-            <!--<onMatch>ACCEPT</onMatch>-->
-            <!--<onMismatch>DENY</onMismatch>-->
-        <!--</filter>-->
-        <!--<file>${LOG_DIR}/bamdule-error.log</file>-->
-        <!--<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
-            <!--<Pattern>-->
-                <!--%d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n-->
-            <!--</Pattern>-->
-            <!--<charset>UTF-8</charset>-->
-        <!--</encoder>-->
+    <!--
+        org.springframework.web 패키지 아래에서 발생하는 INFO 레벨 로그를 Console에 남깁니다.
+        root의 속성을 상속받지 않습니다.
+    -->
+    <logger name="org.springframework.web" level="INFO" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
 
-        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-            <!--<fileNamePattern>${LOG_DIR}/bamdule/bamdule-error.%d{yyyy-MM-dd}.log</fileNamePattern>-->
-            <!--<maxHistory>30</maxHistory>-->
-        <!--</rollingPolicy>-->
-    <!--</appender>-->
 
-    <!--&lt;!&ndash;-->
-        <!--org.springframework.web 패키지 아래에서 발생하는 INFO 레벨 로그를 Console, File에 남깁니다.-->
-        <!--root의 속성을 상속받지 않습니다.-->
-    <!--&ndash;&gt;-->
-    <!--<logger name="org.springframework.web" level="INFO" additivity="false">-->
-        <!--<appender-ref ref="Console"/>-->
-        <!--<appender-ref ref="File"/>-->
-        <!--<appender-ref ref="Error"/>-->
-    <!--</logger>-->
-
-    <!--<logger name="org.apache.ibatis" level="DEBUG" additivity="false">-->
-        <!--<appender-ref ref="Console"/>-->
-        <!--<appender-ref ref="RollingFile"/>-->
-        <!--<appender-ref ref="Error"/>-->
-    <!--</logger>-->
-
-    <!--&lt;!&ndash;-->
-        <!--DEBUG 레벨 로그를 Console, File, RollingFile에 남깁니다.-->
-        <!--ERROR 인 경우 bamdule-error.log에 남깁니다.-->
-    <!--&ndash;&gt;-->
-    <!--<root level="${LOG_LEVEL}">-->
-        <!--<appender-ref ref="Console"/>-->
-        <!--<appender-ref ref="File"/>-->
-        <!--<appender-ref ref="Error"/>-->
-    <!--</root>-->
+    <!--
+        DEBUG 레벨 로그를 Console에 남깁니다.
+    -->
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="Console"/>
+    </root>
 
 </configuration>
