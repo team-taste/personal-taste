@@ -1,5 +1,6 @@
 package personaltaste.service.security
 
+import org.springframework.context.annotation.Primary
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
@@ -14,6 +15,7 @@ import personaltaste.service.model.user.CustomUserDetails
  * @author seungmin
  */
 @Service
+@Primary
 class CustomUserDetailsService(
         private val userRepository: UserRepository
 ) : UserDetailsService {

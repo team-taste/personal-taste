@@ -30,10 +30,9 @@ class JwtTokenProvider(
      */
     private val tokenValidTime: Long = 30 * 60 * 1000L
 
-    fun createToken(userEmail: String, roles: List<String>): String {
+    fun createToken(userEmail: String, now: Date): String {
         val claims: Claims = Jwts.claims().setSubject(userEmail)
-        claims["roles"] = roles
-        val now = Date()
+        claims["roles"] = mutableListOf("USER")    // todo 권한 나누는게 필요해질 때 다시 생각
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
