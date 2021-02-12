@@ -29,6 +29,8 @@ dependencies {
 	runtime("com.h2database:h2")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(module = "junit")
 	}
@@ -38,6 +40,7 @@ dependencies {
 	testImplementation("io.kotlintest:kotlintest-extensions-spring:3.3.3")
 	testImplementation("io.mockk:mockk:1.9.1")
 	testImplementation("org.junit.jupiter:junit-jupiter-api")
+	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
